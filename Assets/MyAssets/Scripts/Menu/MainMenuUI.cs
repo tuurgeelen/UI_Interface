@@ -22,6 +22,9 @@ public class MainMenuUI : MonoBehaviour
 
     private void Start()
     {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        Time.timeScale = 1f;
         ShowStartMenu();
 
         if (loadingScreenPanel != null)
@@ -64,9 +67,7 @@ public class MainMenuUI : MonoBehaviour
 
     public void OnPlayPressed()
     {
-        // stopt alle DOTween animaties zodat errors verdwijnen
         DOTween.KillAll();
-
         StartCoroutine(LoadSceneRoutine());
     }
 
@@ -96,9 +97,7 @@ public class MainMenuUI : MonoBehaviour
             float displayProgress = Mathf.Min(progress, timer / minLoadingTime);
 
             if (loadingBar != null)
-            {
                 loadingBar.value = Mathf.Lerp(loadingBar.value, displayProgress, 5f * Time.deltaTime);
-            }
 
             if (progress >= 1f && timer >= minLoadingTime)
             {
@@ -112,24 +111,8 @@ public class MainMenuUI : MonoBehaviour
         }
     }
 
-    public void OnNewGamePressed()
-    {
-        Debug.Log("New Game pressed");
-    }
-
-    public void OnNewsPressed()
-    {
-        Debug.Log("News pressed");
-    }
-
-    public void OnExitPressed()
-    {
-        Debug.Log("Exit pressed");
-    }
-
     public void QuitGame()
     {
-        Debug.Log("Quit Game");
         Application.Quit();
     }
 }

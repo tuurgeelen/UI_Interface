@@ -1,14 +1,15 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class WeaponManager : MonoBehaviour
 {
-    [SerializeField] WeaponSO[] weapons;
-    [SerializeField] UIDataExample uiDataExample;
+    [SerializeField] private WeaponSO[] weapons;
+    [SerializeField] private UIDataExample uiDataExample;
 
     private int index = 0;
     private WeaponSO selectedWeapon;
 
-    void Start()
+    private void Start()
     {
         if (weapons == null || weapons.Length == 0)
         {
@@ -19,16 +20,11 @@ public class WeaponManager : MonoBehaviour
         SelectWeapon(index);
     }
 
-    void Update()
+    public void OnScrollWheel(InputValue value)
     {
-        HandleScroll();
-    }
+        Vector2 scroll = value.Get<Vector2>();
 
-    void HandleScroll()
-    {
-        float scroll = Input.GetAxis("Mouse ScrollWheel");
-
-        if (scroll > 0f)
+        if (scroll.y > 0f)
         {
             index++;
             if (index >= weapons.Length)
@@ -36,7 +32,7 @@ public class WeaponManager : MonoBehaviour
 
             SelectWeapon(index);
         }
-        else if (scroll < 0f)
+        else if (scroll.y < 0f)
         {
             index--;
             if (index < 0)
@@ -46,7 +42,7 @@ public class WeaponManager : MonoBehaviour
         }
     }
 
-    void SelectWeapon(int newIndex)
+    private void SelectWeapon(int newIndex)
     {
         selectedWeapon = weapons[newIndex];
 
