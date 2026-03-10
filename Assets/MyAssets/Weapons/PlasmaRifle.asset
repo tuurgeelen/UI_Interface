@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60fda67ba99212b408cdd989f0c20a3b, type: 3}
+  m_Name: PlasmaRifle
+  m_EditorClassIdentifier: 
+  weaponType: 2
+  maxAmmo: 60
+  ammocount: 60
+  fireDelay: 0.1
+  waeponSprite: {fileID: 1539144496, guid: f9c4c5f13da31e042a73ae24d9731aeb, type: 3}
+  weaponprefab: {fileID: 0}
+  projectiledamage: 0
+  projectileType: 0
+  maxRayDistance: Infinity
+  physicaProjectile: {fileID: 0}
