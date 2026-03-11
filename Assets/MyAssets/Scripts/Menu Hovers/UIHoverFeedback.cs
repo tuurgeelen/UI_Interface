@@ -6,79 +6,115 @@ using UnityEngine.UI;
 public class UIHoverFeedback : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     [Header("Targets")]
-    [SerializeField] TextMeshProUGUI targetText;
-    [SerializeField] Image targetImage;
-    [SerializeField] Shadow targetShadow;
-    [SerializeField] Outline targetOutline;
+    [SerializeField] private TextMeshProUGUI targetText;
+    [SerializeField] private Image targetImage;
+    [SerializeField] private Shadow targetShadow;
+    [SerializeField] private Outline targetOutline;
 
     [Header("Text")]
-    [SerializeField] bool affectTextColor = true;
-    [SerializeField] Color normalTextColor = new(232/255f, 240/255f, 240/255f, 1f);
-    [SerializeField] Color hoverTextColor  = new(70/255f, 224/255f, 208/255f, 1f);
+    [SerializeField] private bool affectTextColor = true;
+    [SerializeField] private Color normalTextColor = new(232 / 255f, 240 / 255f, 240 / 255f, 1f);
+    [SerializeField] private Color hoverTextColor = new(70 / 255f, 224 / 255f, 208 / 255f, 1f);
 
     [Header("Image")]
-    [SerializeField] bool affectImageColor = false;
-    [SerializeField] Color normalImageColor = new(5/255f, 18/255f, 18/255f, 1f);
-    [SerializeField] Color hoverImageColor  = new(70/255f, 224/255f, 208/255f, 1f);
+    [SerializeField] private bool affectImageColor = false;
+    [SerializeField] private Color normalImageColor = new(5 / 255f, 18 / 255f, 18 / 255f, 1f);
+    [SerializeField] private Color hoverImageColor = new(70 / 255f, 224 / 255f, 208 / 255f, 1f);
 
     [Header("Shadow")]
-    [SerializeField] bool useShadowGlow = false;
-    [SerializeField] Color normalShadowColor = new(0,0,0,0);
-    [SerializeField] Color hoverShadowColor  = new(0.2f, 1f, 0.9f, 0.55f);
-    [SerializeField] Vector2 normalShadowDistance = Vector2.zero;
-    [SerializeField] Vector2 hoverShadowDistance  = new(2f, -2f);
+    [SerializeField] private bool useShadowGlow = false;
+    [SerializeField] private Color normalShadowColor = new(0, 0, 0, 0);
+    [SerializeField] private Color hoverShadowColor = new(0.2f, 1f, 0.9f, 0.55f);
+    [SerializeField] private Vector2 normalShadowDistance = Vector2.zero;
+    [SerializeField] private Vector2 hoverShadowDistance = new(2f, -2f);
 
     [Header("Outline")]
-    [SerializeField] bool useOutlineGlow = false;
-    [SerializeField] Color normalOutlineColor = new(0,0,0,0);
-    [SerializeField] Color hoverOutlineColor  = new(0.2f, 1f, 0.9f, 0.35f);
+    [SerializeField] private bool useOutlineGlow = false;
+    [SerializeField] private Color normalOutlineColor = new(0, 0, 0, 0);
+    [SerializeField] private Color hoverOutlineColor = new(0.2f, 1f, 0.9f, 0.35f);
 
     [Header("Audio")]
-    [SerializeField] AudioSource audioSource;
-    [SerializeField] AudioClip hoverClip, clickClip;
-    [SerializeField, Range(0f, 1f)] float hoverVolume = 1f, clickVolume = 1f;
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip hoverClip;
+    [SerializeField] private AudioClip clickClip;
+    [SerializeField, Range(0f, 1f)] private float hoverVolume = 1f;
+    [SerializeField, Range(0f, 1f)] private float clickVolume = 1f;
 
     [Header("Tab Selection")]
-    [SerializeField] bool playOnlyIfNotSelected = false;
-    [SerializeField] bool isSelected = false;
+    [SerializeField] private bool playOnlyIfNotSelected = false;
+    [SerializeField] private bool isSelected = false;
 
-    void Reset()
+    private void Awake()
     {
-        targetText ??= GetComponentInChildren<TextMeshProUGUI>();
-        targetImage ??= GetComponent<Image>();
-        targetShadow ??= GetComponentInChildren<Shadow>();
-        targetOutline ??= GetComponentInChildren<Outline>();
-        audioSource ??= FindFirstObjectByType<AudioSource>();
+        if (targetText == null) targetText = GetComponentInChildren<TextMeshProUGUI>();
+        if (targetImage == null) targetImage = GetComponent<Image>();
+        if (targetShadow == null) targetShadow = GetComponentInChildren<Shadow>();
+        if (targetOutline == null) targetOutline = GetComponentInChildren<Outline>();
+
+        Apply(false);
     }
 
-    void Awake() => Apply(false);
-
-    public void SetSelected(bool selected) { isSelected = selected; Apply(selected); }
+    public void SetSelected(bool selected)
+    {
+        isSelected = selected;
+        Apply(selected);
+    }
 
     public void OnPointerEnter(PointerEventData e)
     {
-        if (!(playOnlyIfNotSelected && isSelected)) Play(hoverClip, hoverVolume);
-        if (!isSelected) Apply(true);
+        Debug.Log("Hover on: " + gameObject.name);
+
+        if (!(playOnlyIfNotSelected && isSelected))
+            Play(hoverClip, hoverVolume);
+
+        if (!isSelected)
+            Apply(true);
     }
 
-    public void OnPointerExit(PointerEventData e) { if (!isSelected) Apply(false); }
-
-    public void OnPointerClick(PointerEventData e) => Play(clickClip, clickVolume);
-
-    void Play(AudioClip clip, float vol) { if (audioSource && clip) audioSource.PlayOneShot(clip, vol); }
-
-    void Apply(bool hover)
+    public void OnPointerExit(PointerEventData e)
     {
-        if (affectTextColor && targetText) targetText.color = hover ? hoverTextColor : normalTextColor;
-        if (affectImageColor && targetImage) targetImage.color = hover ? hoverImageColor : normalImageColor;
+        if (!isSelected)
+            Apply(false);
+    }
 
-        if (useShadowGlow && targetShadow)
+    public void OnPointerClick(PointerEventData e)
+    {
+        Debug.Log("Click on: " + gameObject.name);
+        Play(clickClip, clickVolume);
+    }
+
+    private void Play(AudioClip clip, float volume)
+    {
+        if (audioSource == null)
+        {
+            Debug.LogWarning("UIHoverFeedback: geen AudioSource ingevuld op " + gameObject.name);
+            return;
+        }
+
+        if (clip == null)
+        {
+            Debug.LogWarning("UIHoverFeedback: geen AudioClip ingevuld op " + gameObject.name);
+            return;
+        }
+
+        audioSource.PlayOneShot(clip, volume);
+    }
+
+    private void Apply(bool hover)
+    {
+        if (affectTextColor && targetText != null)
+            targetText.color = hover ? hoverTextColor : normalTextColor;
+
+        if (affectImageColor && targetImage != null)
+            targetImage.color = hover ? hoverImageColor : normalImageColor;
+
+        if (useShadowGlow && targetShadow != null)
         {
             targetShadow.effectColor = hover ? hoverShadowColor : normalShadowColor;
             targetShadow.effectDistance = hover ? hoverShadowDistance : normalShadowDistance;
         }
 
-        if (useOutlineGlow && targetOutline)
+        if (useOutlineGlow && targetOutline != null)
             targetOutline.effectColor = hover ? hoverOutlineColor : normalOutlineColor;
     }
 }

@@ -27,9 +27,10 @@ public class HoverArrows : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     private void Update()
     {
-        if (!hovering) return;
+        if (!hovering)
+            return;
 
-        float move = Mathf.Sin(Time.time * speed) * distance;
+        float move = Mathf.Sin(Time.unscaledTime * speed) * distance;
 
         if (leftArrow != null)
             leftArrow.anchoredPosition = leftStartPos + new Vector2(-move, 0);

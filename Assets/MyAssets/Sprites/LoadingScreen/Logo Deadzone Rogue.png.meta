@@ -43,7 +43,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -95,7 +95,51 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Logo Deadzone Rogue_3
+      rect:
+        serializedVersion: 2
+        x: 581
+        y: 537
+        width: 7
+        height: 4
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5d9452471fc9fbf49bc51fc4c525d6d5
+      internalID: 296478233
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Logo Deadzone
+      rect:
+        serializedVersion: 2
+        x: 410
+        y: 442
+        width: 703
+        height: 195
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7a7b20e16c846de4b9d3ca61d7326cfc
+      internalID: -1756160409
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -108,8 +152,24 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
-    nameFileIdTable: {}
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      Logo Deadzone: -1756160409
+      Logo Deadzone Rogue_1: 1707199991
+      Logo Deadzone Rogue_10: 1618185891
+      Logo Deadzone Rogue_11: 226808441
+      Logo Deadzone Rogue_12: -1199980060
+      Logo Deadzone Rogue_13: -227221125
+      Logo Deadzone Rogue_2: 1765566468
+      Logo Deadzone Rogue_3: 296478233
+      Logo Deadzone Rogue_4: 1948420465
+      Logo Deadzone Rogue_5: 1543245293
+      Logo Deadzone Rogue_6: 994425486
+      Logo Deadzone Rogue_7: 1359962676
+      Logo Deadzone Rogue_8: 2140522122
+      Logo Deadzone Rogue_9: 1823916770
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

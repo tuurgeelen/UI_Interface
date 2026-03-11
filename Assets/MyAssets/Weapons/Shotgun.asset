@@ -12,12 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60fda67ba99212b408cdd989f0c20a3b, type: 3}
   m_Name: Shotgun
   m_EditorClassIdentifier: 
-  weaponType: 1
+  weaponType: 2
   maxAmmo: 15
   ammocount: 15
-  fireDelay: 3
-  waeponSprite: {fileID: -1723452376, guid: f9c4c5f13da31e042a73ae24d9731aeb, type: 3}
+  fireDelay: 1.5
+  holdToFire: 0
+  waeponSprite: {fileID: -341694858, guid: d71af62e18f28fb42b2b305efda08f9c, type: 3}
   weaponprefab: {fileID: 0}
+  uiScale: {x: 0.6, y: 0.55}
+  switchSound: {fileID: 8300000, guid: 2420f9a6a44ddea498a35125f2c53d4a, type: 3}
+  switchVolume: 1
+  fireSound: {fileID: 8300000, guid: b525d662819ce5446b3b692d45e80de9, type: 3}
+  fireVolume: 1
+  reloadSound: {fileID: 8300000, guid: e5f954282ead1f648b016ef3fe573f0b, type: 3}
+  reloadVolume: 1
+  reloadTime: 3.3
   projectiledamage: 0
   projectileType: 0
   maxRayDistance: Infinity

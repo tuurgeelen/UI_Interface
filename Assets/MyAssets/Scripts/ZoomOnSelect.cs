@@ -4,61 +4,62 @@ using UnityEngine.EventSystems;
 
 public class ZoomOnSelect : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
-    Vector3 startScale;
-    Vector3 startPosition;
-    [SerializeField] float scale = 1.1f;
-    [SerializeField] float offset = 50f;
-    [SerializeField] float wiggleAngle = 5f;
+    [Header("Target")]
+    [SerializeField] private RectTransform target;
 
-    void Start()
+    [Header("Animation")]
+    [SerializeField] private float hoverScale = 1.1f;
+    [SerializeField] private float clickScale = 1.15f;
+    [SerializeField] private float moveOffset = 20f;
+    [SerializeField] private float wiggleAngle = 5f;
+
+    private Vector3 startScale;
+    private Vector2 startAnchoredPos;
+
+    private void Awake()
     {
-        startScale = transform.localScale;
-        startPosition = transform.position;
+        if (target == null)
+            target = transform as RectTransform;
+
+        startScale = target.localScale;
+        startAnchoredPos = target.anchoredPosition;
     }
 
-    void SelectionTween()
+    public void OnPointerEnter(PointerEventData eventData)
     {
+        target.DOKill();
 
-        /*
-            transform.DORotate(new Vector3(0, 0, 25f), 0.2f, RotateMode.Fast).SetEase(Ease.InOutBounce).OnComplete
-            (() => transform.DORotate(new Vector3(0, 0, 0f), 0.2f, RotateMode.Fast).SetEase(Ease.InOutBounce));*/
-        #region uitleg
-        //() => is een lambda expressie, hiermee kunnen we een naamloze 
-        //functie aanmaken die direct wordt uitgevoerd nadat de eerste animatie klaar is.
-        //  In dit geval zorgt het ervoor dat de tweede rotatie begint nadat de eerste rotatie is voltooid.
-        #endregion
-        #region uitleg
-        //DoTween Sequence. Met een sequence kunnen we
-        //verschillende animaties stacken oftewel achter elkaar afspelen.
-        //Normaalgezien speelt DowTween animations die regel per regel staan tegelijk af als 1 combined animatie.
-        //Maar met een sequence hebben we controle over hoe dit gebeurt, en kunnen we dus ook wachttijden maken.
-        #endregion
-        print(transform.name);
-        Sequence selectSequence = DOTween.Sequence();
-        selectSequence.Append(transform.DOScale(startScale * scale, 0.1f));
-        selectSequence.Append(transform.DORotate(new Vector3(0, 0, -wiggleAngle), 0.1f, RotateMode.Fast).SetEase(Ease.OutBounce));
-        selectSequence.Append(transform.DORotate(new Vector3(0, 0, wiggleAngle), 0.1f, RotateMode.Fast).SetEase(Ease.OutBounce));
-        selectSequence.Append(transform.DORotate(new Vector3(0, 0, 0f), 0.2f, RotateMode.Fast).SetEase(Ease.OutBounce));
+        target.DOScale(startScale * hoverScale, 0.15f)
+            .SetUpdate(true);
 
-        selectSequence.Kill();
-
+        target.DOAnchorPosY(startAnchoredPos.y + moveOffset, 0.15f)
+            .SetUpdate(true);
     }
 
-    public void OnPointerEnter(PointerEventData pointerEventData)
+    public void OnPointerExit(PointerEventData eventData)
     {
-        transform.DOMoveY(startPosition.y + offset, 0.15f);
-    }
+        target.DOKill();
 
-    public void OnPointerExit(PointerEventData pointerEventData)
-    {
-        // if (!pointerEventData.pointerEnter == gameObject)
-        transform.DOScale(startScale, 0.15f);
-        transform.DOMoveY(startPosition.y, 0.15f);
+        target.DOScale(startScale, 0.15f)
+            .SetUpdate(true);
+
+        target.DOAnchorPosY(startAnchoredPos.y, 0.15f)
+            .SetUpdate(true);
+
+        target.DORotate(Vector3.zero, 0.15f, RotateMode.Fast)
+            .SetUpdate(true);
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        SelectionTween();
-    }
+        target.DOKill();
 
+        Sequence seq = DOTween.Sequence().SetUpdate(true);
+
+        seq.Append(target.DOScale(startScale * clickScale, 0.08f));
+        seq.Append(target.DORotate(new Vector3(0, 0, -wiggleAngle), 0.08f, RotateMode.Fast));
+        seq.Append(target.DORotate(new Vector3(0, 0, wiggleAngle), 0.08f, RotateMode.Fast));
+        seq.Append(target.DORotate(Vector3.zero, 0.12f, RotateMode.Fast));
+        seq.Join(target.DOScale(startScale * hoverScale, 0.12f));
+    }
 }

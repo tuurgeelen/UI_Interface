@@ -25,6 +25,7 @@ public class MainMenuUI : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         Time.timeScale = 1f;
+
         ShowStartMenu();
 
         if (loadingScreenPanel != null)
