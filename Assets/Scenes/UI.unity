@@ -251,7 +251,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 470b17b74e5a6db46bd252983f4a0147, type: 3}
+  m_Sprite: {fileID: 1910530900, guid: 470b17b74e5a6db46bd252983f4a0147, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -444,7 +444,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 40bec58d7ea91424ea7bbf187bcb26f2, type: 3}
+  m_Sprite: {fileID: -1656294720, guid: 40bec58d7ea91424ea7bbf187bcb26f2, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1008,8 +1008,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.98146, y: 20}
-  m_SizeDelta: {x: 87.34405, y: 19.6928}
+  m_AnchoredPosition: {x: 0.98146, y: 26.1044}
+  m_SizeDelta: {x: 87.34405, y: 12.8822}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &414087984
 MonoBehaviour:
@@ -1204,11 +1204,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57c1c82feb2b4e648b3d0a0461dd98f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ZoomOnSelect
-  target: {fileID: 0}
-  hoverScale: 1.1
+  target: {fileID: 414087983}
+  hoverScale: 1
   clickScale: 1.15
-  moveOffset: 20
-  wiggleAngle: 5
+  moveOffset: 8
+  wiggleAngle: 1
 --- !u!1 &419550120
 GameObject:
   m_ObjectHideFlags: 0
@@ -1912,8 +1912,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.3227, y: -287}
-  m_SizeDelta: {x: 15.087, y: 30}
+  m_AnchoredPosition: {x: 0.3227, y: -297.7988}
+  m_SizeDelta: {x: 15.087, y: 17.8701}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &691244478
 MonoBehaviour:
@@ -2047,10 +2047,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ZoomOnSelect
   target: {fileID: 0}
-  hoverScale: 1.1
+  hoverScale: 1
   clickScale: 1.15
-  moveOffset: 20
-  wiggleAngle: 5
+  moveOffset: 8
+  wiggleAngle: 1
 --- !u!114 &691244483
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2672,7 +2672,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 438a7d76cf1df7c4b854c8ec089d021d, type: 3}
+  m_Sprite: {fileID: 1994365896, guid: 438a7d76cf1df7c4b854c8ec089d021d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2731,8 +2731,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.18, y: -354.40802}
-  m_SizeDelta: {x: 15.087, y: 30}
+  m_AnchoredPosition: {x: 0.18, y: -365.68094}
+  m_SizeDelta: {x: 15.087, y: 17.3375}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1093750286
 MonoBehaviour:
@@ -2878,10 +2878,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ZoomOnSelect
   target: {fileID: 0}
-  hoverScale: 1.1
+  hoverScale: 1
   clickScale: 1.15
-  moveOffset: 20
-  wiggleAngle: 5
+  moveOffset: 8
+  wiggleAngle: 1
 --- !u!114 &1093750291
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3296,8 +3296,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1.46, y: -112.84801}
-  m_SizeDelta: {x: 117.0065, y: 18.1999}
+  m_AnchoredPosition: {x: 1.46, y: -109.64876}
+  m_SizeDelta: {x: 117.0065, y: 15.1977}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1212918038
 MonoBehaviour:
@@ -3492,11 +3492,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57c1c82feb2b4e648b3d0a0461dd98f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ZoomOnSelect
-  target: {fileID: 0}
-  hoverScale: 1.1
+  target: {fileID: 1212918037}
+  hoverScale: 1
   clickScale: 1.15
-  moveOffset: 20
-  wiggleAngle: 5
+  moveOffset: 8
+  wiggleAngle: 1
 --- !u!1 &1218145589
 GameObject:
   m_ObjectHideFlags: 0
@@ -3607,8 +3607,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.82, y: -225.87802}
-  m_SizeDelta: {x: 22.06359, y: 30}
+  m_AnchoredPosition: {x: 0.82, y: -235.16003}
+  m_SizeDelta: {x: 22.06359, y: 19.5738}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1234362775
 MonoBehaviour:
@@ -3754,10 +3754,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ZoomOnSelect
   target: {fileID: 0}
-  hoverScale: 1.1
+  hoverScale: 1
   clickScale: 1.15
-  moveOffset: 20
-  wiggleAngle: 5
+  moveOffset: 8
+  wiggleAngle: 1
 --- !u!114 &1234362780
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4814,8 +4814,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.71219, y: -156.548}
-  m_SizeDelta: {x: 24.534, y: 30}
+  m_AnchoredPosition: {x: 0.71219, y: -166.1481}
+  m_SizeDelta: {x: 24.534, y: 19.2165}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1820821087
 MonoBehaviour:
@@ -4948,11 +4948,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57c1c82feb2b4e648b3d0a0461dd98f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ZoomOnSelect
-  target: {fileID: 0}
-  hoverScale: 1.1
+  target: {fileID: 1820821086}
+  hoverScale: 1
   clickScale: 1.15
-  moveOffset: 20
-  wiggleAngle: 5
+  moveOffset: 8
+  wiggleAngle: 1
 --- !u!114 &1820821092
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5302,8 +5302,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 688, y: -412}
-  m_SizeDelta: {x: 155.1058, y: 130.5695}
+  m_AnchoredPosition: {x: 682.3, y: -416.3}
+  m_SizeDelta: {x: 113.2982, y: 95.3755}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1930656731
 MonoBehaviour:
@@ -5338,7 +5338,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 26eeffce7285b7249a4d0a5ee5c3d116, type: 3}
+  m_Sprite: {fileID: -555667131, guid: 26eeffce7285b7249a4d0a5ee5c3d116, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -5413,7 +5413,7 @@ SpriteRenderer:
   m_Size: {x: 8, y: 6}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_SpriteSortPoint: 1
 --- !u!1 &1953400862
 GameObject:
@@ -5602,11 +5602,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57c1c82feb2b4e648b3d0a0461dd98f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ZoomOnSelect
-  target: {fileID: 0}
-  hoverScale: 1.1
+  target: {fileID: 1953400863}
+  hoverScale: 1
   clickScale: 1.15
-  moveOffset: 20
-  wiggleAngle: 5
+  moveOffset: 8
+  wiggleAngle: 1
 --- !u!114 &1953400869
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5648,18 +5648,54 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 927299015}
+    - target: {fileID: 1776192949298895892, guid: 3c07a54fb377c064c9d76978b7804307, type: 3}
+      propertyPath: hoverScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1776192949298895892, guid: 3c07a54fb377c064c9d76978b7804307, type: 3}
+      propertyPath: moveOffset
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1776192949298895892, guid: 3c07a54fb377c064c9d76978b7804307, type: 3}
+      propertyPath: wiggleAngle
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1865187385118589466, guid: 3c07a54fb377c064c9d76978b7804307, type: 3}
       propertyPath: target
       value: 
       objectReference: {fileID: 2084524037}
+    - target: {fileID: 1865187385118589466, guid: 3c07a54fb377c064c9d76978b7804307, type: 3}
+      propertyPath: hoverScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1865187385118589466, guid: 3c07a54fb377c064c9d76978b7804307, type: 3}
+      propertyPath: moveOffset
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1865187385118589466, guid: 3c07a54fb377c064c9d76978b7804307, type: 3}
+      propertyPath: wiggleAngle
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2057338521311348363, guid: 3c07a54fb377c064c9d76978b7804307, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 1770
       objectReference: {fileID: 0}
     - target: {fileID: 2512144365757970295, guid: 3c07a54fb377c064c9d76978b7804307, type: 3}
       propertyPath: target
       value: 
       objectReference: {fileID: 1781004962}
+    - target: {fileID: 2512144365757970295, guid: 3c07a54fb377c064c9d76978b7804307, type: 3}
+      propertyPath: hoverScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2512144365757970295, guid: 3c07a54fb377c064c9d76978b7804307, type: 3}
+      propertyPath: moveOffset
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2512144365757970295, guid: 3c07a54fb377c064c9d76978b7804307, type: 3}
+      propertyPath: wiggleAngle
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2836636524614667313, guid: 3c07a54fb377c064c9d76978b7804307, type: 3}
       propertyPath: audioSource
       value: 
@@ -5670,39 +5706,39 @@ PrefabInstance:
       objectReference: {fileID: 1173498983}
     - target: {fileID: 3969121264921773019, guid: 3c07a54fb377c064c9d76978b7804307, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3969121264921773019, guid: 3c07a54fb377c064c9d76978b7804307, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3969121264921773019, guid: 3c07a54fb377c064c9d76978b7804307, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: -17
       objectReference: {fileID: 0}
     - target: {fileID: 4587238372934969445, guid: 3c07a54fb377c064c9d76978b7804307, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4587238372934969445, guid: 3c07a54fb377c064c9d76978b7804307, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4587238372934969445, guid: 3c07a54fb377c064c9d76978b7804307, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 1056.0431
       objectReference: {fileID: 0}
     - target: {fileID: 4587238372934969445, guid: 3c07a54fb377c064c9d76978b7804307, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 1750
       objectReference: {fileID: 0}
     - target: {fileID: 4587238372934969445, guid: 3c07a54fb377c064c9d76978b7804307, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 538.02155
       objectReference: {fileID: 0}
     - target: {fileID: 4587238372934969445, guid: 3c07a54fb377c064c9d76978b7804307, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -885
       objectReference: {fileID: 0}
     - target: {fileID: 4638821449489990745, guid: 3c07a54fb377c064c9d76978b7804307, type: 3}
       propertyPath: audioSource
@@ -5718,15 +5754,15 @@ PrefabInstance:
       objectReference: {fileID: 1173498983}
     - target: {fileID: 6561336176961538059, guid: 3c07a54fb377c064c9d76978b7804307, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6561336176961538059, guid: 3c07a54fb377c064c9d76978b7804307, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6561336176961538059, guid: 3c07a54fb377c064c9d76978b7804307, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 0.5056497
       objectReference: {fileID: 0}
     - target: {fileID: 6594518985444305501, guid: 3c07a54fb377c064c9d76978b7804307, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -5736,21 +5772,73 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 580649587}
+    - target: {fileID: 6658857011458053358, guid: 3c07a54fb377c064c9d76978b7804307, type: 3}
+      propertyPath: hoverScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6658857011458053358, guid: 3c07a54fb377c064c9d76978b7804307, type: 3}
+      propertyPath: moveOffset
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6658857011458053358, guid: 3c07a54fb377c064c9d76978b7804307, type: 3}
+      propertyPath: wiggleAngle
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6767580937162145621, guid: 3c07a54fb377c064c9d76978b7804307, type: 3}
       propertyPath: target
       value: 
       objectReference: {fileID: 1150632324}
+    - target: {fileID: 6767580937162145621, guid: 3c07a54fb377c064c9d76978b7804307, type: 3}
+      propertyPath: hoverScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6767580937162145621, guid: 3c07a54fb377c064c9d76978b7804307, type: 3}
+      propertyPath: moveOffset
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6767580937162145621, guid: 3c07a54fb377c064c9d76978b7804307, type: 3}
+      propertyPath: wiggleAngle
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7293443558910832899, guid: 3c07a54fb377c064c9d76978b7804307, type: 3}
       propertyPath: target
       value: 
       objectReference: {fileID: 1166916974}
+    - target: {fileID: 7293443558910832899, guid: 3c07a54fb377c064c9d76978b7804307, type: 3}
+      propertyPath: hoverScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7293443558910832899, guid: 3c07a54fb377c064c9d76978b7804307, type: 3}
+      propertyPath: moveOffset
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7293443558910832899, guid: 3c07a54fb377c064c9d76978b7804307, type: 3}
+      propertyPath: wiggleAngle
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7364391671851525602, guid: 3c07a54fb377c064c9d76978b7804307, type: 3}
       propertyPath: target
       value: 
       objectReference: {fileID: 1924736963}
+    - target: {fileID: 7364391671851525602, guid: 3c07a54fb377c064c9d76978b7804307, type: 3}
+      propertyPath: hoverScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7364391671851525602, guid: 3c07a54fb377c064c9d76978b7804307, type: 3}
+      propertyPath: moveOffset
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7364391671851525602, guid: 3c07a54fb377c064c9d76978b7804307, type: 3}
+      propertyPath: wiggleAngle
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7637622920046650243, guid: 3c07a54fb377c064c9d76978b7804307, type: 3}
       propertyPath: m_Name
       value: SettingsMenuPanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 7637622920046650243, guid: 3c07a54fb377c064c9d76978b7804307, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7792498622395311350, guid: 3c07a54fb377c064c9d76978b7804307, type: 3}
       propertyPath: m_Pivot.x

@@ -23,7 +23,7 @@ MonoBehaviour:
   switchSound: {fileID: 8300000, guid: 2420f9a6a44ddea498a35125f2c53d4a, type: 3}
   switchVolume: 1
   fireSound: {fileID: 8300000, guid: b525d662819ce5446b3b692d45e80de9, type: 3}
-  fireVolume: 1
+  fireVolume: 0.799
   reloadSound: {fileID: 8300000, guid: e5f954282ead1f648b016ef3fe573f0b, type: 3}
   reloadVolume: 1
   reloadTime: 3.3

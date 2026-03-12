@@ -14,16 +14,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponType: 3
   maxAmmo: 40
-  ammocount: 10
+  ammocount: 27
   fireDelay: 0.1
   holdToFire: 1
   waeponSprite: {fileID: 1558090876, guid: d71af62e18f28fb42b2b305efda08f9c, type: 3}
   weaponprefab: {fileID: 0}
   uiScale: {x: 0.7, y: 0.6}
-  reloadTime: 1.5
-  reloadSound: {fileID: 0}
   switchSound: {fileID: 8300000, guid: 2420f9a6a44ddea498a35125f2c53d4a, type: 3}
+  switchVolume: 0.412
   fireSound: {fileID: 8300000, guid: 68ce081231ce5e5489e1d1250098b23f, type: 3}
+  fireVolume: 0.446
+  reloadSound: {fileID: 8300000, guid: f4d453e1fb427804584b752c2d87af6d, type: 3}
+  reloadVolume: 0.495
+  reloadTime: 2.6
   projectiledamage: 0
   projectileType: 0
   maxRayDistance: Infinity
