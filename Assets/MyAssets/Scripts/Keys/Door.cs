@@ -2,35 +2,41 @@ using UnityEngine;
 
 public class Door : MonoBehaviour
 {
-    [Header("Door Settings")]
-    [SerializeField] private KeyID requiredKey;
+    [Header("Lock Settings")]
     [SerializeField] private bool isLocked = true;
+    [SerializeField] private KeyID requiredKey;
 
-    public bool TryOpen(PlayerKeyInventory inventory)
+    [Header("Door Movement")]
+    [SerializeField] private SlidingDoor slidingDoor;
+
+    private void Awake()
     {
-        if (!isLocked)
-        {
-            OpenDoor();
-            return true;
-        }
-
-        if (inventory.HasKey(requiredKey))
-        {
-            isLocked = false;
-            OpenDoor();
-            return true;
-        }
-
-        Debug.Log("Deur is op slot. Je hebt de juiste key niet.");
-        return false;
+        if (slidingDoor == null)
+            slidingDoor = GetComponent<SlidingDoor>();
     }
 
-    private void OpenDoor()
+    public void TryOpen(PlayerKeyInventory inventory)
     {
-        Debug.Log($"{gameObject.name} gaat open!");
-        
-        // Hier later je animatie of open-logica
-        // Bijvoorbeeld animator trigger:
-        // GetComponent<Animator>().SetTrigger("Open");
+        if (slidingDoor == null)
+        {
+            Debug.LogWarning($"Geen SlidingDoor gevonden op {gameObject.name}");
+            return;
+        }
+
+        if (!isLocked)
+        {
+            slidingDoor.ToggleDoor();
+            return;
+        }
+
+        if (inventory != null && inventory.HasKey(requiredKey))
+        {
+            Debug.Log("Juiste key gevonden: " + requiredKey);
+            isLocked = false;
+            slidingDoor.ToggleDoor();
+            return;
+        }
+
+        Debug.Log("Deur is op slot. Vereiste key: " + requiredKey);
     }
 }
