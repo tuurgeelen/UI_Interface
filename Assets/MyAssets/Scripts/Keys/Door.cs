@@ -9,10 +9,17 @@ public class Door : MonoBehaviour
     [Header("Door Movement")]
     [SerializeField] private SlidingDoor slidingDoor;
 
+    [Header("Audio")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip doorSound;
+
     private void Awake()
     {
         if (slidingDoor == null)
             slidingDoor = GetComponent<SlidingDoor>();
+
+        if (audioSource == null)
+            audioSource = GetComponent<AudioSource>();
     }
 
     public void TryOpen(PlayerKeyInventory inventory)
@@ -25,7 +32,7 @@ public class Door : MonoBehaviour
 
         if (!isLocked)
         {
-            slidingDoor.ToggleDoor();
+            ToggleDoor();
             return;
         }
 
@@ -33,10 +40,20 @@ public class Door : MonoBehaviour
         {
             Debug.Log("Juiste key gevonden: " + requiredKey);
             isLocked = false;
-            slidingDoor.ToggleDoor();
+            ToggleDoor();
             return;
         }
 
         Debug.Log("Deur is op slot. Vereiste key: " + requiredKey);
+    }
+
+    private void ToggleDoor()
+    {
+        slidingDoor.ToggleDoor();
+
+        if (audioSource != null && doorSound != null)
+        {
+            audioSource.PlayOneShot(doorSound);
+        }
     }
 }

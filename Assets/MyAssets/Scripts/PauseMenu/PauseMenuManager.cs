@@ -52,6 +52,11 @@ public class PauseMenuManager : MonoBehaviour
         Time.timeScale = 0f;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+
+        if (ObjectiveManager.Instance != null)
+        {
+            ObjectiveManager.Instance.RefreshUI();
+        }
     }
 
     public void ResumeGame()
@@ -70,6 +75,11 @@ public class PauseMenuManager : MonoBehaviour
         Time.timeScale = 1f;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        if (ObjectiveManager.Instance != null)
+        {
+            ObjectiveManager.Instance.RefreshUI();
+        }
     }
 
     public void ShowSettingsPanel()
