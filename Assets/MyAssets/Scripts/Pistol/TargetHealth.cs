@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class TargetHealth : MonoBehaviour
 {
-    public int health = 100;
+    [SerializeField] private int health = 100;
 
     public void TakeDamage(int amount)
     {
@@ -11,7 +11,12 @@ public class TargetHealth : MonoBehaviour
 
         if (health <= 0)
         {
-            Destroy(gameObject);
+            Die();
         }
+    }
+
+    private void Die()
+    {
+        Destroy(gameObject);
     }
 }

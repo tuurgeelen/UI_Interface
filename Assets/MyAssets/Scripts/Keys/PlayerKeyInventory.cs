@@ -1,49 +1,20 @@
+using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerInteraction : MonoBehaviour
+public class PlayerKeyInventory : MonoBehaviour
 {
-    [SerializeField] private Camera playerCamera;
-    [SerializeField] private float interactDistance = 3f;
-    [SerializeField] private LayerMask interactLayer;
+    private HashSet<KeyID> collectedKeys = new HashSet<KeyID>();
 
-    private PlayerKeyInventory inventory;
-
-    private void Awake()
+    public void AddKey(KeyID keyID)
     {
-        inventory = GetComponent<PlayerKeyInventory>();
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (collectedKeys.Add(keyID))
         {
-            TryInteract();
+            Debug.Log("Key opgepakt: " + keyID);
         }
     }
 
-    private void TryInteract()
+    public bool HasKey(KeyID keyID)
     {
-        Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
-
-        if (Physics.Raycast(ray, out RaycastHit hit, interactDistance, interactLayer))
-        {
-            KeyPickup key = hit.collider.GetComponentInParent<KeyPickup>();
-            if (key != null)
-            {
-                key.Pickup(inventory);
-                return;
-            }
-
-            Door door = hit.collider.GetComponentInParent<Door>();
-            if (door != null)
-            {
-                door.TryOpen(inventory);
-                return;
-            }
-
-            // NIET DOEN:
-            // SlidingDoor doorSlide = hit.collider.GetComponentInParent<SlidingDoor>();
-            // if (doorSlide != null) doorSlide.ToggleDoor();
-        }
+        return collectedKeys.Contains(keyID);
     }
 }

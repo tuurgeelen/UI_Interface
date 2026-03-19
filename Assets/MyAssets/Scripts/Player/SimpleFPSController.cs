@@ -4,13 +4,17 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(CharacterController))]
 public class SimpleFPSController : MonoBehaviour
 {
-    [SerializeField] private float moveSpeed = 5f;
+    [Header("Movement")]
+    [SerializeField] private float walkSpeed = 5f;
+    [SerializeField] private float sprintSpeed = 8f;
     [SerializeField] private float jumpHeight = 1.5f;
     [SerializeField] private float gravity = -20f;
 
     [Header("Footsteps")]
     [SerializeField] private AudioSource footstepSource;
     [SerializeField] private AudioClip footstepClip;
+    [SerializeField] private float walkFootstepPitch = 1f;
+    [SerializeField] private float sprintFootstepPitch = 1.25f;
 
     [Header("Jump")]
     [SerializeField] private AudioSource jumpSource;
@@ -25,6 +29,10 @@ public class SimpleFPSController : MonoBehaviour
     private Vector3 velocity;
     private bool jumpPressed;
     private bool wasGrounded;
+
+    public bool IsSprinting { get; private set; }
+    public bool IsMoving => moveInput.magnitude > 0.1f && controller != null && controller.isGrounded;
+    public Vector2 MoveInput => moveInput;
 
     private void Awake()
     {
@@ -51,7 +59,6 @@ public class SimpleFPSController : MonoBehaviour
     {
         bool isGrounded = controller.isGrounded;
 
-        // Landing detectie
         if (!wasGrounded && isGrounded)
         {
             if (landingSource != null && landingClip != null)
@@ -62,7 +69,17 @@ public class SimpleFPSController : MonoBehaviour
             velocity.y = -2f;
 
         Vector3 move = transform.right * moveInput.x + transform.forward * moveInput.y;
-        controller.Move(move * moveSpeed * Time.deltaTime);
+
+        bool hasMoveInput = moveInput.magnitude > 0.1f;
+
+        bool shiftHeld =
+            Keyboard.current != null &&
+            Keyboard.current.leftShiftKey.isPressed;
+
+        IsSprinting = shiftHeld && hasMoveInput && isGrounded;
+
+        float currentSpeed = IsSprinting ? sprintSpeed : walkSpeed;
+        controller.Move(move * currentSpeed * Time.deltaTime);
 
         if (jumpPressed && isGrounded)
         {
@@ -85,14 +102,17 @@ public class SimpleFPSController : MonoBehaviour
         bool isMoving = moveInput.magnitude > 0.1f;
         bool isGrounded = controller.isGrounded;
 
+        if (footstepSource != null)
+            footstepSource.pitch = IsSprinting ? sprintFootstepPitch : walkFootstepPitch;
+
         if (isMoving && isGrounded)
         {
-            if (!footstepSource.isPlaying)
+            if (footstepSource != null && !footstepSource.isPlaying)
                 footstepSource.Play();
         }
         else
         {
-            if (footstepSource.isPlaying)
+            if (footstepSource != null && footstepSource.isPlaying)
                 footstepSource.Stop();
         }
     }

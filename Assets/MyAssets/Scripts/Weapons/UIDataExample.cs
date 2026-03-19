@@ -4,36 +4,74 @@ using UnityEngine.UI;
 
 public class UIDataExample : MonoBehaviour
 {
-    [SerializeField] Slider getSlider;
-    [SerializeField] TextMeshProUGUI getText;
-    [SerializeField] Image GetImage;
+    [Header("Main UI")]
+    [SerializeField] private TextMeshProUGUI ammoText;
+    [SerializeField] private Image weaponImage;
 
-    public void OnInitializeSO(WeaponSO _weaponSO)
+    [Header("Extra Objects (knife, pistol icons, etc.)")]
+    [SerializeField] private GameObject[] extraObjectsToHideWhenNoWeapon;
+
+    public void UpdateUI(int ammoCount, int maxAmmo, Sprite weaponSprite, Vector2 scale)
     {
-        if (_weaponSO == null)
+        bool hasWeapon = weaponSprite != null && maxAmmo > 0;
+
+        if (!hasWeapon)
         {
-            Debug.LogError("WeaponSO is null, cannot initialize UI values");
+            ShowEmptyState();
             return;
         }
 
-        UpdateUI(_weaponSO.ammocount, _weaponSO.maxAmmo, _weaponSO.waeponSprite, _weaponSO.uiScale);
+        // Ammo text
+        if (ammoText != null)
+        {
+            ammoText.gameObject.SetActive(true);
+            ammoText.SetText($"{ammoCount:D2}/{maxAmmo}");
+        }
+
+        // Weapon image
+        if (weaponImage != null)
+        {
+            weaponImage.gameObject.SetActive(true);
+            weaponImage.enabled = true;
+            weaponImage.sprite = weaponSprite;
+            weaponImage.rectTransform.localScale = scale;
+        }
+
+        SetExtraObjectsActive(true);
     }
 
-    public void UpdateUI(int _ammoCount, int _maxAmmo, Sprite _weaponSprite, Vector2 scale)
+    public void ShowEmptyState()
     {
-        UpdateAmmoCountUI(_ammoCount, _maxAmmo);
+        // Ammo weg
+        if (ammoText != null)
+        {
+            ammoText.text = "";
+            ammoText.gameObject.SetActive(false);
+        }
 
-        if (_weaponSprite != null)
-            GetImage.sprite = _weaponSprite;
+        // Image weg
+        if (weaponImage != null)
+        {
+            weaponImage.sprite = null;
+            weaponImage.enabled = false;
+            weaponImage.gameObject.SetActive(false);
+        }
 
-        GetImage.rectTransform.localScale = scale;
+        // Extra visuals weg (knife, pistol icons etc.)
+        SetExtraObjectsActive(false);
     }
 
-    public void UpdateAmmoCountUI(int _ammoCount, int _maxAmmo)
+    private void SetExtraObjectsActive(bool state)
     {
-        string CombineText = $"{_ammoCount:D2}/{_maxAmmo}";
-        getText.SetText(CombineText);
-        getSlider.value = _ammoCount;
-        getSlider.maxValue = _maxAmmo;
+        if (extraObjectsToHideWhenNoWeapon == null)
+            return;
+
+        for (int i = 0; i < extraObjectsToHideWhenNoWeapon.Length; i++)
+        {
+            if (extraObjectsToHideWhenNoWeapon[i] != null)
+            {
+                extraObjectsToHideWhenNoWeapon[i].SetActive(state);
+            }
+        }
     }
 }

@@ -1,20 +1,54 @@
-using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerKeyInventory : MonoBehaviour
+public class PlayerInteraction : MonoBehaviour
 {
-    private HashSet<KeyID> collectedKeys = new HashSet<KeyID>();
+    [SerializeField] private Camera playerCamera;
+    [SerializeField] private float interactDistance = 3f;
+    [SerializeField] private LayerMask interactLayer;
 
-    public void AddKey(KeyID keyID)
+    private PlayerKeyInventory inventory;
+    private WeaponManager weaponManager;
+
+    private void Awake()
     {
-        if (collectedKeys.Add(keyID))
+        inventory = GetComponent<PlayerKeyInventory>();
+        weaponManager = GetComponentInChildren<WeaponManager>();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.E))
         {
-            Debug.Log("Key opgepakt: " + keyID);
+            TryInteract();
         }
     }
 
-    public bool HasKey(KeyID keyID)
+    private void TryInteract()
     {
-        return collectedKeys.Contains(keyID);
+        Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
+
+        if (Physics.Raycast(ray, out RaycastHit hit, interactDistance, interactLayer))
+        {
+            KeyPickup key = hit.collider.GetComponentInParent<KeyPickup>();
+            if (key != null)
+            {
+                key.Pickup(inventory);
+                return;
+            }
+
+            WeaponPickup weaponPickup = hit.collider.GetComponentInParent<WeaponPickup>();
+            if (weaponPickup != null)
+            {
+                weaponPickup.Pickup(weaponManager);
+                return;
+            }
+
+            Door door = hit.collider.GetComponentInParent<Door>();
+            if (door != null)
+            {
+                door.TryOpen(inventory);
+                return;
+            }
+        }
     }
 }
