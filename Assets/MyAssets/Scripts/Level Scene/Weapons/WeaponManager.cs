@@ -14,11 +14,13 @@ public class WeaponManager : MonoBehaviour
     [Header("Weapons")]
     [SerializeField] private WeaponEntry[] weapons;
     [SerializeField] private UIDataExample uiDataExample;
+    [SerializeField] private WeaponHUDManager weaponHUDManager;
 
     [Header("References")]
     [SerializeField] private Camera fpsCamera;
     [SerializeField] private WeaponMotion weaponMotion;
     [SerializeField] private Transform projectileSpawnPoint;
+    [SerializeField] private ParticleSystem muzzleFlash;
 
     [Header("Switch Settings")]
     [SerializeField] private float scrollThreshold = 0.05f;
@@ -54,14 +56,10 @@ public class WeaponManager : MonoBehaviour
         for (int i = 0; i < weapons.Length; i++)
         {
             if (weapons[i].weaponData != null)
-            {
                 currentAmmo[i] = weapons[i].weaponData.maxAmmo;
-            }
 
             if (weapons[i].weaponObject != null)
-            {
                 weapons[i].weaponObject.SetActive(false);
-            }
         }
 
         currentIndex = -1;
@@ -105,6 +103,16 @@ public class WeaponManager : MonoBehaviour
         if (weapons == null || weapons.Length == 0)
             return;
 
+        int unlockedCount = 0;
+        for (int i = 0; i < unlockedWeapons.Length; i++)
+        {
+            if (unlockedWeapons[i])
+                unlockedCount++;
+        }
+
+        if (unlockedCount <= 1)
+            return;
+
         int startIndex = currentIndex < 0 ? 0 : currentIndex;
         int checkIndex = startIndex;
 
@@ -117,7 +125,7 @@ public class WeaponManager : MonoBehaviour
             else if (checkIndex < 0)
                 checkIndex = weapons.Length - 1;
 
-            if (unlockedWeapons[checkIndex])
+            if (unlockedWeapons[checkIndex] && checkIndex != currentIndex)
             {
                 SelectWeapon(checkIndex, true);
                 nextSwitchTime = Time.time + switchCooldown;
@@ -128,10 +136,7 @@ public class WeaponManager : MonoBehaviour
 
     private void HandleFire()
     {
-        if (isReloading)
-            return;
-
-        if (currentWeapon == null || currentWeapon.weaponData == null)
+        if (isReloading || currentWeapon == null || currentWeapon.weaponData == null)
             return;
 
         if (Time.time < nextFireTime)
@@ -148,11 +153,15 @@ public class WeaponManager : MonoBehaviour
 
         if (currentAmmo[currentIndex] <= 0)
         {
-            StartReload();
+            if (data.maxAmmo > 0)
+                StartReload();
+
             return;
         }
 
-        currentAmmo[currentIndex]--;
+        // Alleen ammo aftrekken als het wapen ammo gebruikt
+        if (data.maxAmmo > 0)
+            currentAmmo[currentIndex]--;
 
         if (currentWeapon.animator != null)
             currentWeapon.animator.SetTrigger("Shoot");
@@ -161,9 +170,10 @@ public class WeaponManager : MonoBehaviour
             weaponMotion.AddRecoil();
 
         if (data.fireSound != null)
-        {
             audioSource.PlayOneShot(data.fireSound, data.fireVolume);
-        }
+
+        if (muzzleFlash != null && data.weaponType == WeaponSO.WeaponType.Pistol)
+            muzzleFlash.Play();
 
         FireWeapon(data);
 
@@ -174,13 +184,9 @@ public class WeaponManager : MonoBehaviour
     private void FireWeapon(WeaponSO data)
     {
         if (data.projectileType == WeaponSO.ProjectileType.Raycast)
-        {
             FireRaycast(data);
-        }
         else
-        {
             FireProjectile(data);
-        }
     }
 
     private void FireRaycast(WeaponSO data)
@@ -195,8 +201,6 @@ public class WeaponManager : MonoBehaviour
 
         if (Physics.Raycast(ray, out RaycastHit hit, data.maxRayDistance))
         {
-            Debug.Log("Hit: " + hit.collider.name);
-
             TargetHealth target = hit.collider.GetComponentInParent<TargetHealth>();
             if (target != null)
             {
@@ -215,7 +219,7 @@ public class WeaponManager : MonoBehaviour
     {
         if (data.physicalProjectile == null)
         {
-            Debug.LogWarning("Geen physical projectile prefab ingesteld op " + data.weaponType);
+            Debug.LogWarning("Geen physical projectile ingevuld op " + data.weaponType);
             return;
         }
 
@@ -243,9 +247,7 @@ public class WeaponManager : MonoBehaviour
         {
             Rigidbody rb = bullet.GetComponent<Rigidbody>();
             if (rb != null)
-            {
                 rb.linearVelocity = spawnPoint.forward * data.projectileSpeed;
-            }
 
             Destroy(bullet, data.projectileLifeTime);
         }
@@ -254,6 +256,10 @@ public class WeaponManager : MonoBehaviour
     private void HandleReload()
     {
         if (currentWeapon == null || currentWeapon.weaponData == null)
+            return;
+
+        // Knife of melee wapens reloaden niet
+        if (currentWeapon.weaponData.maxAmmo <= 0)
             return;
 
         if (Input.GetKeyDown(KeyCode.R) && !isReloading)
@@ -265,14 +271,15 @@ public class WeaponManager : MonoBehaviour
         }
 
         if (isReloading && Time.time >= reloadFinishTime)
-        {
             FinishReload();
-        }
     }
 
     private void StartReload()
     {
         if (currentWeapon == null || currentWeapon.weaponData == null)
+            return;
+
+        if (currentWeapon.weaponData.maxAmmo <= 0)
             return;
 
         isReloading = true;
@@ -303,10 +310,7 @@ public class WeaponManager : MonoBehaviour
     public void UnlockWeapon(WeaponSO weaponToUnlock)
     {
         if (weaponToUnlock == null)
-        {
-            Debug.LogWarning("weaponToUnlock is null");
             return;
-        }
 
         for (int i = 0; i < weapons.Length; i++)
         {
@@ -316,17 +320,15 @@ public class WeaponManager : MonoBehaviour
                 unlockedWeapons[i] = true;
 
                 if (!wasAlreadyUnlocked)
-                {
                     currentAmmo[i] = weaponToUnlock.maxAmmo;
-                }
+
+                if (weaponHUDManager != null)
+                    weaponHUDManager.ShowWeaponIcon(weaponToUnlock.weaponType);
 
                 SelectWeapon(i, !wasAlreadyUnlocked);
-                Debug.Log("Weapon unlocked: " + weaponToUnlock.weaponType);
                 return;
             }
         }
-
-        Debug.LogWarning("WeaponSO niet gevonden in WeaponManager: " + weaponToUnlock.name);
     }
 
     private void SelectWeapon(int newIndex, bool playSound)
@@ -340,16 +342,16 @@ public class WeaponManager : MonoBehaviour
         for (int i = 0; i < weapons.Length; i++)
         {
             if (weapons[i].weaponObject != null)
-            {
                 weapons[i].weaponObject.SetActive(i == newIndex);
-            }
         }
 
         currentIndex = newIndex;
         currentWeapon = weapons[newIndex];
         isReloading = false;
 
-        if (playSound && currentWeapon.weaponData != null && currentWeapon.weaponData.switchSound != null)
+        if (playSound &&
+            currentWeapon.weaponData != null &&
+            currentWeapon.weaponData.switchSound != null)
         {
             audioSource.PlayOneShot(
                 currentWeapon.weaponData.switchSound,
@@ -367,24 +369,20 @@ public class WeaponManager : MonoBehaviour
 
         if (currentWeapon == null || currentWeapon.weaponData == null)
         {
-            uiDataExample.ShowEmptyState();
+            uiDataExample.HideAmmo();
             return;
         }
 
-        uiDataExample.UpdateUI(
+        uiDataExample.UpdateAmmo(
             currentAmmo[currentIndex],
-            currentWeapon.weaponData.maxAmmo,
-            currentWeapon.weaponData.weaponSprite,
-            currentWeapon.weaponData.uiScale
+            currentWeapon.weaponData.maxAmmo
         );
     }
 
     private void ClearWeaponUI()
     {
         if (uiDataExample != null)
-        {
-            uiDataExample.ShowEmptyState();
-        }
+            uiDataExample.HideAmmo();
     }
 
     public bool HasWeapon(WeaponSO weaponToCheck)
@@ -395,9 +393,7 @@ public class WeaponManager : MonoBehaviour
         for (int i = 0; i < weapons.Length; i++)
         {
             if (weapons[i].weaponData == weaponToCheck)
-            {
                 return unlockedWeapons[i];
-            }
         }
 
         return false;

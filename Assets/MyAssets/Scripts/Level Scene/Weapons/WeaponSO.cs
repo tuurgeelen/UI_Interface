@@ -3,7 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "WeaponObject", menuName = "Inventory/Create new Weapon")]
 public class WeaponSO : ScriptableObject
 {
-    public enum WeaponType { Raygun, Pistol, Shotgun, AsaulRifle, Sniper }
+    public enum WeaponType {Pistol, Knife, Grenade}
     public enum ProjectileType { Raycast, PhysicalProjectile }
 
     [Header("Weapon type")]
