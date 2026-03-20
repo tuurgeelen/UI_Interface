@@ -6,6 +6,7 @@ public class WeaponPickup : MonoBehaviour
 
     [Header("Objective")]
     [SerializeField] private string completeObjectiveID;
+    [SerializeField] private string requiredObjectiveIDToPickup;
 
     [Header("Audio")]
     [SerializeField] private AudioSource audioSource;
@@ -19,6 +20,17 @@ public class WeaponPickup : MonoBehaviour
 
     public void Pickup(WeaponManager weaponManager)
     {
+        if (ObjectiveManager.Instance != null && !string.IsNullOrEmpty(requiredObjectiveIDToPickup))
+        {
+            string currentObjective = ObjectiveManager.Instance.GetCurrentObjectiveID();
+
+            if (currentObjective != requiredObjectiveIDToPickup)
+            {
+                Debug.Log("Je kan dit wapen nog niet oppakken. Vereiste objective: " + requiredObjectiveIDToPickup);
+                return;
+            }
+        }
+
         if (weaponManager == null || weaponToUnlock == null)
             return;
 

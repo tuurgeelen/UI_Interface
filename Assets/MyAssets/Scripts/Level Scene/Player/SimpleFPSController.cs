@@ -33,6 +33,9 @@ public class SimpleFPSController : MonoBehaviour
     public bool IsSprinting { get; private set; }
     public bool IsMoving => moveInput.magnitude > 0.1f && controller != null && controller.isGrounded;
     public Vector2 MoveInput => moveInput;
+    public bool IsGrounded => controller != null && controller.isGrounded;
+    public bool IsAirborne => !IsGrounded;
+    public bool JustLanded { get; private set; }
 
     private void Awake()
     {
@@ -58,9 +61,12 @@ public class SimpleFPSController : MonoBehaviour
     private void HandleMovement()
     {
         bool isGrounded = controller.isGrounded;
+        JustLanded = false;
 
         if (!wasGrounded && isGrounded)
         {
+            JustLanded = true;
+
             if (landingSource != null && landingClip != null)
                 landingSource.PlayOneShot(landingClip);
         }

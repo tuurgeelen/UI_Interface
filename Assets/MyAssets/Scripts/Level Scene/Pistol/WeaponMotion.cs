@@ -19,7 +19,6 @@ public class WeaponMotion : MonoBehaviour
     public float bobFrequency = 7f;
     public float bobHorizontalAmplitude = 0.03f;
     public float bobVerticalAmplitude = 0.02f;
-    public float bobSmooth = 10f;
 
     [Header("Sprint Bobbing")]
     public float sprintBobFrequency = 11f;
@@ -31,6 +30,18 @@ public class WeaponMotion : MonoBehaviour
     public float idleHorizontalAmplitude = 0.005f;
     public float idleVerticalAmplitude = 0.01f;
     public float idleRotationAmount = 1.2f;
+
+    [Header("Jump Motion")]
+    public float jumpPositionY = 0.04f;
+    public float jumpPositionZ = -0.03f;
+    public float jumpRotationX = -6f;
+    public float jumpSmooth = 8f;
+
+    [Header("Landing Motion")]
+    public float landKickY = -0.05f;
+    public float landRotationX = 8f;
+    public float landReturnSpeed = 10f;
+    public float landSnappiness = 18f;
 
     [Header("Recoil")]
     public float recoilKickBack = 0.08f;
@@ -51,6 +62,12 @@ public class WeaponMotion : MonoBehaviour
 
     private Vector3 currentRecoilRotation;
     private Vector3 targetRecoilRotation;
+
+    private Vector3 currentLandPosition;
+    private Vector3 targetLandPosition;
+
+    private Vector3 currentLandRotation;
+    private Vector3 targetLandRotation;
 
     private float bobTime;
     private float idleTime;
@@ -73,6 +90,8 @@ public class WeaponMotion : MonoBehaviour
         float moveY;
         bool isSprinting = false;
         bool isMoving = false;
+        bool isAirborne = false;
+        bool justLanded = false;
 
         if (fpsController != null)
         {
@@ -81,6 +100,8 @@ public class WeaponMotion : MonoBehaviour
             moveY = input.y;
             isSprinting = fpsController.IsSprinting;
             isMoving = input.magnitude > 0.1f;
+            isAirborne = fpsController.IsAirborne;
+            justLanded = fpsController.JustLanded;
         }
         else
         {
@@ -92,22 +113,30 @@ public class WeaponMotion : MonoBehaviour
         Vector3 swayPosition = CalculateSwayPosition(mouseX, mouseY);
         Quaternion swayRotation = CalculateSwayRotation(mouseX, mouseY);
 
-        Vector3 movementOffset = CalculateMovementOffset(moveX, moveY, isMoving, isSprinting);
-        Quaternion idleRotation = CalculateIdleRotation(isMoving);
+        Vector3 movementOffset = CalculateMovementOffset(moveX, moveY, isMoving, isSprinting, isAirborne);
+        Quaternion idleRotation = CalculateIdleRotation(isMoving, isAirborne);
 
+        Vector3 jumpPosition = CalculateJumpPosition(isAirborne);
+        Quaternion jumpRotation = CalculateJumpRotation(isAirborne);
+
+        HandleLanding(justLanded);
         HandleRecoil();
 
         Vector3 finalPosition =
             initialLocalPosition +
             swayPosition +
             movementOffset +
-            currentRecoilPosition;
+            jumpPosition +
+            currentRecoilPosition +
+            currentLandPosition;
 
         Quaternion finalRotation =
             initialLocalRotation *
             swayRotation *
             idleRotation *
-            Quaternion.Euler(currentRecoilRotation);
+            jumpRotation *
+            Quaternion.Euler(currentRecoilRotation) *
+            Quaternion.Euler(currentLandRotation);
 
         transform.localPosition = Vector3.Lerp(
             transform.localPosition,
@@ -141,8 +170,13 @@ public class WeaponMotion : MonoBehaviour
         return Quaternion.Euler(rotX, rotY, 0f);
     }
 
-    Vector3 CalculateMovementOffset(float moveX, float moveY, bool isMoving, bool isSprinting)
+    Vector3 CalculateMovementOffset(float moveX, float moveY, bool isMoving, bool isSprinting, bool isAirborne)
     {
+        if (isAirborne)
+        {
+            return Vector3.zero;
+        }
+
         if (isMoving)
         {
             float frequency = isSprinting ? sprintBobFrequency : bobFrequency;
@@ -169,15 +203,51 @@ public class WeaponMotion : MonoBehaviour
         }
     }
 
-    Quaternion CalculateIdleRotation(bool isMoving)
+    Quaternion CalculateIdleRotation(bool isMoving, bool isAirborne)
     {
-        if (isMoving)
+        if (isMoving || isAirborne)
             return Quaternion.identity;
 
         float rotZ = Mathf.Sin(idleTime) * idleRotationAmount;
         float rotX = Mathf.Cos(idleTime * 0.5f) * (idleRotationAmount * 0.35f);
 
         return Quaternion.Euler(rotX, 0f, rotZ);
+    }
+
+    Vector3 CalculateJumpPosition(bool isAirborne)
+    {
+        if (!isAirborne)
+            return Vector3.zero;
+
+        return Vector3.Lerp(
+            Vector3.zero,
+            new Vector3(0f, jumpPositionY, jumpPositionZ),
+            Time.deltaTime * jumpSmooth
+        );
+    }
+
+    Quaternion CalculateJumpRotation(bool isAirborne)
+    {
+        if (!isAirborne)
+            return Quaternion.identity;
+
+        Quaternion targetRot = Quaternion.Euler(jumpRotationX, 0f, 0f);
+        return Quaternion.Slerp(Quaternion.identity, targetRot, Time.deltaTime * jumpSmooth);
+    }
+
+    void HandleLanding(bool justLanded)
+    {
+        if (justLanded)
+        {
+            targetLandPosition += new Vector3(0f, landKickY, 0f);
+            targetLandRotation += new Vector3(landRotationX, 0f, 0f);
+        }
+
+        targetLandPosition = Vector3.Lerp(targetLandPosition, Vector3.zero, landReturnSpeed * Time.deltaTime);
+        currentLandPosition = Vector3.Lerp(currentLandPosition, targetLandPosition, landSnappiness * Time.deltaTime);
+
+        targetLandRotation = Vector3.Lerp(targetLandRotation, Vector3.zero, landReturnSpeed * Time.deltaTime);
+        currentLandRotation = Vector3.Lerp(currentLandRotation, targetLandRotation, landSnappiness * Time.deltaTime);
     }
 
     void HandleRecoil()

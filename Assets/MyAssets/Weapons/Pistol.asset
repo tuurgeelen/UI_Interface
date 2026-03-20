@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Pistol
   m_EditorClassIdentifier: 
   weaponType: 1
-  maxAmmo: 30
+  maxAmmo: 12
   fireDelay: 0.4
   holdToFire: 1
   reloadTime: 1
@@ -28,8 +28,8 @@ MonoBehaviour:
   reloadSound: {fileID: 8300000, guid: cf8b99b9b422acd44b30c122766a1d80, type: 3}
   reloadVolume: 1
   projectileType: 0
-  maxRayDistance: Infinity
-  physicalProjectile: {fileID: 0}
+  maxRayDistance: 75
+  physicalProjectile: {fileID: 7824406252452644697, guid: 4f7fdb05ca88e5445b79d7d9c9d06373, type: 3}
   projectileSpeed: 40
   projectileLifeTime: 3
   hitEffectPrefab: {fileID: 0}

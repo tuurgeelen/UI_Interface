@@ -40,7 +40,7 @@ public class RobotTargetManager : MonoBehaviour
 
     private void Start()
     {
-        robotsLeft = robots.Count;
+        robotsLeft = 0;
 
         for (int i = 0; i < robots.Count; i++)
         {
@@ -49,6 +49,7 @@ public class RobotTargetManager : MonoBehaviour
                 robots[i].originalScale = robots[i].robot.localScale;
                 robots[i].isDestroyed = false;
                 robots[i].robot.gameObject.SetActive(false);
+                robotsLeft++;
             }
         }
     }
@@ -67,12 +68,13 @@ public class RobotTargetManager : MonoBehaviour
     private void ActivateRobots()
     {
         activated = true;
-        robotsLeft = robots.Count;
+        robotsLeft = 0;
 
         for (int i = 0; i < robots.Count; i++)
         {
             if (robots[i].robot != null)
             {
+                robotsLeft++;
                 robots[i].isDestroyed = false;
                 robots[i].robot.localScale = robots[i].originalScale;
                 robots[i].robot.gameObject.SetActive(true);
@@ -81,6 +83,12 @@ public class RobotTargetManager : MonoBehaviour
                 for (int c = 0; c < cols.Length; c++)
                 {
                     cols[c].enabled = true;
+                }
+
+                TargetHealth health = robots[i].robot.GetComponent<TargetHealth>();
+                if (health != null)
+                {
+                    health.ResetHealth();
                 }
             }
         }
