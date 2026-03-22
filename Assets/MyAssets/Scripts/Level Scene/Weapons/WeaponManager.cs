@@ -44,6 +44,9 @@ public class WeaponManager : MonoBehaviour
     {
         audioSource = GetComponent<AudioSource>();
 
+        if (weaponMotion != null)
+            weaponMotion.gameObject.SetActive(true);
+
         if (weapons == null || weapons.Length == 0)
         {
             Debug.LogError("Geen wapens ingevuld in WeaponManager.");
@@ -151,23 +154,31 @@ public class WeaponManager : MonoBehaviour
         if (!wantsToFire)
             return;
 
-        if (currentAmmo[currentIndex] <= 0)
-        {
-            if (data.maxAmmo > 0)
-                StartReload();
+        bool usesAmmo = data.maxAmmo > 0;
 
+        if (usesAmmo && currentAmmo[currentIndex] <= 0)
+        {
+            StartReload();
             return;
         }
 
-        // Alleen ammo aftrekken als het wapen ammo gebruikt
-        if (data.maxAmmo > 0)
+        if (usesAmmo)
             currentAmmo[currentIndex]--;
 
         if (currentWeapon.animator != null)
             currentWeapon.animator.SetTrigger("Shoot");
 
         if (weaponMotion != null)
-            weaponMotion.AddRecoil();
+        {
+            if (data.weaponType == WeaponSO.WeaponType.Pistol)
+            {
+                weaponMotion.AddRecoil();
+            }
+            else if (data.weaponType == WeaponSO.WeaponType.Knife)
+            {
+                weaponMotion.AddKnifeStab();
+            }
+        }
 
         if (data.fireSound != null)
             audioSource.PlayOneShot(data.fireSound, data.fireVolume);
@@ -258,7 +269,6 @@ public class WeaponManager : MonoBehaviour
         if (currentWeapon == null || currentWeapon.weaponData == null)
             return;
 
-        // Knife of melee wapens reloaden niet
         if (currentWeapon.weaponData.maxAmmo <= 0)
             return;
 
@@ -338,6 +348,9 @@ public class WeaponManager : MonoBehaviour
 
         if (!unlockedWeapons[newIndex])
             return;
+
+        if (weaponMotion != null)
+            weaponMotion.gameObject.SetActive(true);
 
         for (int i = 0; i < weapons.Length; i++)
         {

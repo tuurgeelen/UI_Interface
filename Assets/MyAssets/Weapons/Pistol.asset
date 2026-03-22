@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60fda67ba99212b408cdd989f0c20a3b, type: 3}
   m_Name: Pistol
   m_EditorClassIdentifier: 
-  weaponType: 1
+  weaponType: 0
   maxAmmo: 12
   fireDelay: 0.4
   holdToFire: 1

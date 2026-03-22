@@ -18,7 +18,7 @@ MonoBehaviour:
   holdToFire: 0
   reloadTime: 0
   projectileDamage: 20
-  weaponSprite: {fileID: 1632797784, guid: d71af62e18f28fb42b2b305efda08f9c, type: 3}
+  weaponSprite: {fileID: 1723573812, guid: 61fc89a6cc334154b8e807c96999aa69, type: 3}
   weaponPrefab: {fileID: 0}
   uiScale: {x: 0.55, y: 0.55}
   switchSound: {fileID: 8300000, guid: 2420f9a6a44ddea498a35125f2c53d4a, type: 3}

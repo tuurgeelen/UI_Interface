@@ -21,12 +21,12 @@ MonoBehaviour:
   weaponSprite: {fileID: -1914933148, guid: 090d80f604c83404b8a31df8c65f703f, type: 3}
   weaponPrefab: {fileID: 0}
   uiScale: {x: 0.55, y: 0.55}
-  switchSound: {fileID: 8300000, guid: 2420f9a6a44ddea498a35125f2c53d4a, type: 3}
+  switchSound: {fileID: 8300000, guid: 14a13609b81056a45ad13caed5f87d2d, type: 3}
   switchVolume: 1
-  fireSound: {fileID: 8300000, guid: dbcfb7638a5af614799fd43278176878, type: 3}
+  fireSound: {fileID: 8300000, guid: 14a13609b81056a45ad13caed5f87d2d, type: 3}
   fireVolume: 1
   reloadSound: {fileID: 8300000, guid: cf8b99b9b422acd44b30c122766a1d80, type: 3}
-  reloadVolume: 0
+  reloadVolume: 1
   projectileType: 1
   maxRayDistance: 10
   physicalProjectile: {fileID: 0}

@@ -51,6 +51,14 @@ public class WeaponMotion : MonoBehaviour
     public float recoilReturnSpeed = 8f;
     public float recoilSnappiness = 14f;
 
+    [Header("Knife Stab")]
+    public float knifeStabForward = 0.18f;
+    public float knifeStabUp = -0.04f;
+    public float knifeStabRotationX = 18f;
+    public float knifeStabRotationY = 8f;
+    public float knifeStabSnappiness = 20f;
+    public float knifeStabReturnSpeed = 14f;
+
     [Header("Movement Input")]
     public bool useRawInput = true;
 
@@ -68,6 +76,12 @@ public class WeaponMotion : MonoBehaviour
 
     private Vector3 currentLandRotation;
     private Vector3 targetLandRotation;
+
+    private Vector3 currentKnifeStabPosition;
+    private Vector3 targetKnifeStabPosition;
+
+    private Vector3 currentKnifeStabRotation;
+    private Vector3 targetKnifeStabRotation;
 
     private float bobTime;
     private float idleTime;
@@ -121,6 +135,7 @@ public class WeaponMotion : MonoBehaviour
 
         HandleLanding(justLanded);
         HandleRecoil();
+        HandleKnifeStab();
 
         Vector3 finalPosition =
             initialLocalPosition +
@@ -128,7 +143,8 @@ public class WeaponMotion : MonoBehaviour
             movementOffset +
             jumpPosition +
             currentRecoilPosition +
-            currentLandPosition;
+            currentLandPosition +
+            currentKnifeStabPosition;
 
         Quaternion finalRotation =
             initialLocalRotation *
@@ -136,7 +152,8 @@ public class WeaponMotion : MonoBehaviour
             idleRotation *
             jumpRotation *
             Quaternion.Euler(currentRecoilRotation) *
-            Quaternion.Euler(currentLandRotation);
+            Quaternion.Euler(currentLandRotation) *
+            Quaternion.Euler(currentKnifeStabRotation);
 
         transform.localPosition = Vector3.Lerp(
             transform.localPosition,
@@ -173,9 +190,7 @@ public class WeaponMotion : MonoBehaviour
     Vector3 CalculateMovementOffset(float moveX, float moveY, bool isMoving, bool isSprinting, bool isAirborne)
     {
         if (isAirborne)
-        {
             return Vector3.zero;
-        }
 
         if (isMoving)
         {
@@ -259,6 +274,15 @@ public class WeaponMotion : MonoBehaviour
         currentRecoilRotation = Vector3.Lerp(currentRecoilRotation, targetRecoilRotation, recoilSnappiness * Time.deltaTime);
     }
 
+    void HandleKnifeStab()
+    {
+        targetKnifeStabPosition = Vector3.Lerp(targetKnifeStabPosition, Vector3.zero, knifeStabReturnSpeed * Time.deltaTime);
+        currentKnifeStabPosition = Vector3.Lerp(currentKnifeStabPosition, targetKnifeStabPosition, knifeStabSnappiness * Time.deltaTime);
+
+        targetKnifeStabRotation = Vector3.Lerp(targetKnifeStabRotation, Vector3.zero, knifeStabReturnSpeed * Time.deltaTime);
+        currentKnifeStabRotation = Vector3.Lerp(currentKnifeStabRotation, targetKnifeStabRotation, knifeStabSnappiness * Time.deltaTime);
+    }
+
     public void AddRecoil()
     {
         targetRecoilPosition += new Vector3(0f, 0f, -recoilKickBack);
@@ -267,6 +291,17 @@ public class WeaponMotion : MonoBehaviour
             recoilRotationX,
             Random.Range(-recoilRotationY, recoilRotationY),
             Random.Range(-recoilRotationZ, recoilRotationZ)
+        );
+    }
+
+    public void AddKnifeStab()
+    {
+        targetKnifeStabPosition += new Vector3(0f, knifeStabUp, knifeStabForward);
+
+        targetKnifeStabRotation += new Vector3(
+            knifeStabRotationX,
+            knifeStabRotationY,
+            0f
         );
     }
 }
